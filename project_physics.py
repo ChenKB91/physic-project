@@ -3,11 +3,12 @@
   A_____A
  /  = . =\   < Developed by CKB >
 /     w   \
-current version: 1.1
+current version: 1.2
 
 update log:
 ver 1.0 - initial release
 ver 1.1 - fix weird acceleration
+ver 1.2 - fix "ball stuck in wall" problem
 
 '''
 from visual import *
@@ -24,14 +25,22 @@ def reflect(w,v):   #ball hit wall
 #    return re
 #'''
     if abs(abs(re)-abs(v)) <= 0.001*abs(v):
-        return re
+        if dot(v,f)<0:
+            return re
+        else:
+            print('!!!!!!!!!!!!!!!!false hit!!!!!!!!!!!!!!!')
+            return v
     else:
-        print("back hit")
+        #print("back hit")
         w=-w
         f = vector(-w[1],w[0],0) #法向量
         unit_f=f/abs(f) #法向量的單位向量
-        re = v + abs(dot(v,f)/abs(f))*unit_f*2
-        return re
+        if dot(v,f)<0:
+            re = v + abs(dot(v,f)/abs(f))*unit_f*2
+            return re
+        else:
+            print('!!!!!!!!!!!!!!!!false hit!!!!!!!!!!!!!!!')
+            return v
 #'''
 def vcollision(a1p, a2p, a1v,a2v): #ball hit ball
     v1prime = a1v - (a1p - a2p)  * sum((a1v-a2v)*(a1p-a2p)) / sum((a1p-a2p)**2)
@@ -44,6 +53,7 @@ def checkhit(w1,w2,b):
     bx ,by  =  b[0], b[1]
     area = 0.5*abs(wx1*wy2+wx2*by+bx*wy1-wy1*wx2-wy2*bx-by*wx1)
     wall = sqrt((wx1-wx2)**2+(wy1-wy2)**2)
+    f = vector(-w[1],w[0],0) #法向量
     
     if ((2*area/wall)<=r or (dist(bx,by,wx1,wy1)<=r or dist(bx,by,wx2,wy2)<=r)) and not(dist(bx,by,wx1,wy1)>wall or dist(bx,by,wx2,wy2)>wall):
         '''
@@ -76,11 +86,13 @@ ball = sphere(pos = vector(0.5,-0.5,0),radius = r,make_trail=True,retain=100,col
 t = 0
 dt =0.0005
 while True:
-    rate(2000)
+    rate(500)
     t+=dt
     ball.pos += v*dt
     for i in range(len(wall)-1):
-        if checkhit(wall[i],wall[i+1],ball.pos) == True:
+        w = wall[i]-wall[i+1]
+        f = vector(-w[1],w[0],0) #法向量
+        if checkhit(wall[i],wall[i+1],ball.pos) and dot(v,f)<0:
             print("hit: wall %d and %d"%(i,i+1))
             v = reflect(wall[i]-wall[i+1],v)
             print(t,abs(v))
