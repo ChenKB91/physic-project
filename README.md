@@ -9,5 +9,5 @@ current version: 1.2
 
 # TO DO
 ~~fix "ball stuck on side"~~  done ver 1.2  
-add more balls  
-add ball&ball collision  
+add more balls.  
+add ball&ball collision  
