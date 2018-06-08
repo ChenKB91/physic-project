@@ -3,12 +3,13 @@
   A_____A
  /  = . =\   < Developed by CKB >
 /     w   \
-current version: 1.2
+current version: 1.3
 
 update log:
 ver 1.0 - initial release
 ver 1.1 - fix weird acceleration
 ver 1.2 - fix "ball stuck in wall" problem
+ver 1.3 - add more balls, with collision
 
 '''
 from visual import *
