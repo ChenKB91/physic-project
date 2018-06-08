@@ -10,5 +10,5 @@ current version: 1.2
 
 # TO DO
 ~~fix "ball stuck on side"~~  done ver 1.2  
-~~add more balls.~~ done ver 1.3
-~~add ball&ball collision  ~~ done ver 1.3
+~~add more balls.~~ done ver 1.3  
+~~add ball&ball collision~~ done ver 1.3  
